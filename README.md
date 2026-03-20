@@ -1,10 +1,8 @@
 # GESTION_DE_INVENTARIO
 
-
 **NOMBRE DEL GRUPO:**
 
 GOT: The Bit
-
 
 
 **ROLES:**
@@ -16,7 +14,6 @@ GOT: The Bit
 *QA Lead:* Brenda Agustina Bedoya Márquez
 
 *UX Lead:* Vanina Magalí Leguizamón
-
 
 
 **CONTEXTO:**
