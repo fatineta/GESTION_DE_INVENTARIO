@@ -1,9 +1,11 @@
 # GESTION_DE_INVENTARIO
 
 **NOMBRE DEL GRUPO:**
+
 GOT: The Bit
 
 👤 **ROLES:**
+
 *Scrum Master:* Ana Florencia Zayas
 
 *Dev Lead:* Fátima Agazzoni
