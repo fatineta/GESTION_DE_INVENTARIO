@@ -14,9 +14,9 @@ Luego, los diseños fueron analizados y modificados por el equipo según los req
 Entrada 002
 Fecha: 02/04/2026
 Integrante: Fátima Agazzoni
-Herramienta: DeepSeek
-Qué se generó: Estructura inicial de las clases Producto y MoviminetoStock.
-Qué modificamos:Adaptamos los nombres de atributos al esquema SQL del Dev Leaad.
+Herramienta: Claude
+Qué se generó: Conexión y ajustes de lógica en el código de main.go para mantener constante la comunicación entre las operaciones que se comunican con la interfaz y la base de datos.
+Qué modificamos: Funciones de Observer y State, principalmente.
 Justificación: Usamos IA para acelerar el boilerplate, pero la lógica la escribimos nosotros.
 
 
