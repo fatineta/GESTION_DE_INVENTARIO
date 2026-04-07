@@ -1,23 +1,110 @@
-3.2. Patrón N°2: State
-3.2.1.Intención Original según GoF
-El patrón State es uno de los patrones de comportamiento definidos por la GoF. Su objetivo principal es permitir que un objeto altere su comportamiento cuando su estado interno cambia, dándole al objeto la apariencia de que ha cambiado de clase. Esencialmente resuelve los problemas altamente dependientes en estructuras como if-else o switch-case. Cada estado posible se encapsula en una clase concreta que implementa una interfaz común, y el objeto delega su comportamiento al estado actual en lugar de ramificar su lógica internamente.
+## 3.2. Patrón N°2: State
 
-3.2.2. Problema de Diseño en el Sistema
+### 3.2.1. Intención Original según GoF
 
-En el sistema de gestión de inventario, la tabla tblestado define cinco estados posibles: Activo, Inactivo, Pendiente, Finalizado y Cancelado. Estos estados aplican tanto a productos (tblproductos.estado_id) como a movimientos de entrada (tblentradas.estado_id) y ventas (tblventas.estado_id).
-El problema concreto aparece cuando se intenta controlar qué operaciones son válidas según el estado actual de un objeto. Por ejemplo:
+El patrón **State** es uno de los patrones de comportamiento definidos por la *Gang of Four (GoF)*.  
+Su objetivo principal es permitir que un objeto altere su comportamiento cuando su **estado interno cambia**, dando la impresión de que el objeto ha cambiado de clase.
 
-Un Producto en estado Inactivo no debería poder registrar nuevas ventas ni entradas de stock.
-Una Entrada en estado Cancelado no debería poder modificar el stock_actual del producto asociado.
-Una Entrada en estado Pendiente debería poder confirmarse o cancelarse, pero no finalizarse directamente.
+Este patrón resuelve problemas donde el comportamiento depende fuertemente del estado del objeto y normalmente se implementaría mediante estructuras complejas de `if-else` o `switch-case`.
 
-Sin el patrón State, toda esta lógica de validación se acumularía dentro de los métodos de Producto, Entrada o Venta en forma de bloques if-else que consultan el estado_id antes de ejecutar cada operación. Esto viola el principio de responsabilidad única (SRP), hace el código difícil de leer y extender, y vuelve prácticamente imposible testear cada estado de forma aislada sin instanciar toda la lógica del objeto.
-Esto se refleja directamente en la interfaz: el flujo de tres pasos para registrar movimientos (v-mov) implica transiciones de estado (Paso 1 → Paso 2 → Paso 3 → Confirmado), y el Dashboard muestra badges de estado crítico, bajo y normal que representan comportamientos distintos del mismo objeto Producto.
+Cada estado posible se encapsula en una **clase concreta** que implementa una **interfaz común**.  
+El objeto principal delega su comportamiento al estado actual en lugar de contener toda la lógica condicional internamente.
 
-3.2.3.Justificación Técnica y Alternativas Descartadas (Dimensión 3)
+De esta manera:
 
-¿Por qué State y no otra solución?
-La alternativa más obvia fue mantener el campo estado_id como un simple entero y controlar todo mediante if-else o switch-case dentro de cada método. Esta solución fue descartada porque a medida que crecen los estados o las operaciones, el código se vuelve inmantenible: cada nueva regla de negocio obliga a modificar múltiples métodos en múltiples clases, violando el principio abierto/cerrado (OCP).
-Otra alternativa evaluada fue usar una tabla de transiciones válidas en la base de datos, consultando antes de cada operación si la transición está permitida. Si bien esto es útil como respaldo en la capa de persistencia, no resuelve el problema en la capa de objetos: la lógica de comportamiento diferenciado por estado sigue sin tener un lugar claro en el código.
-El patrón State fue elegido porque encapsula el comportamiento de cada estado en su propia clase. Cada estado sabe exactamente qué operaciones permite y hacia qué otros estados puede transicionar. Esto hace que agregar un nuevo estado (por ejemplo, "En revisión") solo requiera crear una nueva clase sin tocar las existentes. Además, cada clase de estado es testeable de forma completamente aislada, lo que es fundamental para la etapa de TDD en el TP2.
-La elección también es coherente con el diagrama de casos de uso: el caso "Verificar stock mínimo" y "Señal de alarma" implican que un Producto se comporta de manera diferente según si está en estado normal, bajo o crítico, lo cual es exactamente el escenario que State resuelve con elegancia.
+- Se eliminan estructuras condicionales extensas.
+- Cada estado posee su propia lógica.
+- El sistema se vuelve más extensible y mantenible.
+
+---
+
+### 3.2.2. Problema de Diseño en el Sistema
+
+En el sistema de gestión de inventario, la tabla `tblestado` define cinco estados posibles:
+
+- Activo  
+- Inactivo  
+- Pendiente  
+- Finalizado  
+- Cancelado  
+
+Estos estados se aplican a:
+
+- Productos (`tblproductos.estado_id`)
+- Movimientos de entrada (`tblentradas.estado_id`)
+- Ventas (`tblventas.estado_id`)
+
+El problema surge al controlar **qué operaciones son válidas según el estado actual** de cada objeto.
+
+Ejemplos:
+
+- Un **Producto** en estado *Inactivo* no debería permitir registrar nuevas ventas ni entradas de stock.
+- Una **Entrada** en estado *Cancelado* no debería modificar el `stock_actual` del producto asociado.
+- Una **Entrada** en estado *Pendiente* debería poder confirmarse o cancelarse, pero no finalizarse directamente.
+
+Sin aplicar el patrón State, toda esta lógica quedaría centralizada dentro de métodos de `Producto`, `Entrada` o `Venta`, utilizando múltiples validaciones condicionales sobre `estado_id`.
+
+Esto genera varios problemas:
+
+- ❌ Violación del **Principio de Responsabilidad Única (SRP)**  
+- ❌ Código difícil de leer y mantener  
+- ❌ Alta dependencia entre módulos  
+- ❌ Dificultad para realizar testing aislado por estado  
+
+Además, esta problemática se refleja directamente en la interfaz del sistema:
+
+- El flujo **v-mov** de tres pasos implica transiciones de estado  
+  - Paso 1 → Paso 2 → Paso 3 → Confirmado
+- El **Dashboard** muestra badges de estado (*crítico*, *bajo*, *normal*), representando distintos comportamientos del mismo objeto `Producto`.
+
+Esto evidencia que el comportamiento del sistema depende del estado, haciendo necesario un patrón orientado a estados.
+
+---
+
+### 3.2.3. Justificación Técnica y Alternativas Descartadas (Dimensión 3)
+
+#### ¿Por qué State y no otra solución?
+
+**Alternativa 1: uso de `estado_id` con if-else o switch-case**
+
+Se evaluó mantener el campo `estado_id` como un entero y controlar las reglas mediante estructuras condicionales.
+
+Fue descartada porque:
+
+- A medida que aumentan los estados, el código se vuelve inmantenible.
+- Cada nueva regla obliga a modificar múltiples clases.
+- Viola el **Principio Abierto/Cerrado (OCP)**.
+
+---
+
+**Alternativa 2: tabla de transiciones en base de datos**
+
+Otra opción fue definir en la base de datos una tabla de transiciones válidas y consultarla antes de cada operación.
+
+Si bien resulta útil como validación en la capa de persistencia:
+
+- No organiza la lógica en la capa de objetos.
+- El comportamiento dependiente del estado sigue disperso.
+- No mejora la estructura del código orientado a objetos.
+
+---
+
+#### Solución elegida: Patrón State
+
+El patrón **State** fue seleccionado porque:
+
+- Encapsula el comportamiento de cada estado en una clase independiente.
+- Cada estado conoce:
+  - Qué operaciones permite.
+  - A qué estados puede transicionar.
+- Permite agregar nuevos estados (ej.: *En revisión*) sin modificar clases existentes.
+- Facilita el testing aislado de cada estado.
+- Se alinea naturalmente con una estrategia **TDD**.
+
+Además, la decisión es coherente con los casos de uso del sistema:
+
+- *Verificar stock mínimo*
+- *Señal de alarma*
+- Indicadores de stock **normal**, **bajo** o **crítico**
+
+En todos estos escenarios, un mismo objeto `Producto` modifica su comportamiento según su estado, exactamente el problema que el patrón **State** está diseñado para resolver.
