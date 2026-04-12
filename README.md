@@ -3,9 +3,9 @@
 **ROLES:**
 | Nombre           | Rol          | GitHub       |
 |------------------|--------------|--------------|
-| Ana Florencia Zayas| Scrum Master| @AnaFlorenciaZayas|
+||Brenda Bedoya  Scrum Master      |@brenbedoya   |
 | Fátima Agazzoni  | Dev Lead     | @fatineta    |
-| Brenda Bedoya    | QA Lead      | @brenbedoya  |
+| Ana Florencia Zayas| QA Lead|@AnaFlorenciaZayas |
 | Vanina Leguizamón| UX Lead      | @mag-3e      |
 
 # GESTION_DE_INVENTARIO
