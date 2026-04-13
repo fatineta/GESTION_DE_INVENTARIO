@@ -3,10 +3,10 @@
 **ROLES:**
 | Nombre           | Rol          | GitHub       |
 |------------------|--------------|--------------|
-||Brenda Bedoya     DEV & UX     |@brenbedoya   |
-| Fátima Agazzoni  | Scrum Master | @fatineta    |
+||Brenda Bedoya    |Scrum Master  |@brenbedoya   |
+| Fátima Agazzoni  | Dev Lead | @fatineta    |
 | Ana Florencia Zayas| QA Lead|@AnaFlorenciaZayas |
-| Vanina Leguizamón| Scrum Master      | @mag-3e      |
+| Vanina Leguizamón| UX Lead     | @mag-3e      |
 
 # GESTION_DE_INVENTARIO
 
