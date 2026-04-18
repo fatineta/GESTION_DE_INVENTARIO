@@ -108,7 +108,13 @@ De ISO 13407, el concepto más duradero es la iteración basada en evaluación c
 | ISO 9001       | 1987 (rev. 2015)    | Gestión de calidad en procesos: planificación, ejecución, verificación, mejora continua (PDCA) | Sí, como referencia de proceso | El ciclo PDCA de ISO 9001 se alinea con Scrum: planificar (backlog) → hacer (sprint) → verificar (QA/pruebas) → actuar (retrospectiva). La validación de campos en formularios, el control de stock mínimo y los tests unitarios con TDD son aplicaciones concretas del enfoque de calidad de esta norma. |
 
 ---
+## Los tres componentes de la usabilidad
 
+| Componente   | Definición                                                                 | Ejemplo concreto en el sistema de stock                                                                 |
+|--------------|-----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|
+| Eficacia     | Grado en que los usuarios logran sus objetivos de forma completa y precisa | El empleado puede registrar una entrada de stock sin errores en los datos del producto (nombre, cantidad, motivo) |
+| Eficiencia   | Recursos invertidos (tiempo, esfuerzo) en relación al resultado obtenido   | El encargado accede al listado de productos a reponer en menos de 3 clics desde la pantalla de inicio   |
+| Satisfacción | Ausencia de incomodidad y actitud positiva hacia el uso del producto       | El empleado no siente frustración al buscar un producto por categoría ni al interpretar el estado del stock (crítico, bajo, normal) |
 ## 2. ¿Qué estándares serían obligatorios si el sistema fuera crítico?
 
 Si nuestro sistema de gestión de inventario fuera declarado crítico (por ejemplo, si controlara el stock de medicamentos en una farmacia hospitalaria, insumos en una planta nuclear, o materiales peligrosos en una industria química), los estándares de cumplimiento obligatorio cambiarían sustancialmente.
