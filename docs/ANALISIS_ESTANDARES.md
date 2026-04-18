@@ -108,6 +108,7 @@ De ISO 13407, el concepto más duradero es la iteración basada en evaluación c
 | ISO 9001       | 1987 (rev. 2015)    | Gestión de calidad en procesos: planificación, ejecución, verificación, mejora continua (PDCA) | Sí, como referencia de proceso | El ciclo PDCA de ISO 9001 se alinea con Scrum: planificar (backlog) → hacer (sprint) → verificar (QA/pruebas) → actuar (retrospectiva). La validación de campos en formularios, el control de stock mínimo y los tests unitarios con TDD son aplicaciones concretas del enfoque de calidad de esta norma. |
 
 ---
+- **ISO 9241-11** → Usabilidad: eficacia, eficiencia, satisfacción.
 ## Los tres componentes de la usabilidad
 
 | Componente   | Definición                                                                 | Ejemplo concreto en el sistema de stock                                                                 |
