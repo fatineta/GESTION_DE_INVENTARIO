@@ -40,15 +40,15 @@ Se utilizó IA para acelerar la generación del boilerplate, mientras que la ló
 **Herramienta:** Claude (Anthropic)  
  
 **Qué se generó:**  
-Se generó el archivo de pruebas unitarias `ferreteria_test.go` ubicado en `test/unit/`, aplicando la disciplina de Desarrollo Guiado por Pruebas (TDD). El archivo incluye 21 casos de prueba que cubren 6 funciones del sistema: `calcularNuevoStock`, `calcularUrgencia`, `validarProducto`, `calcularFaltante`, `estadoDesdeNombre` y el patrón State (`EstadoPedido`). También se generó la documentación técnica asociada en `docs/tp2-pruebas-unitarias.md` y el workflow de CI/CD en `.github/workflows/tests.yml`.
- 
+Se generó el archivo de pruebas unitarias `ferreteria_test.go` ubicado en `test/unit/`, aplicando la disciplina de Desarrollo Guiado por Pruebas (TDD). El archivo incluye 21 casos de prueba que cubren 6 funciones del sistema: `calcularNuevoStock`, `calcularUrgencia`, `validarProducto`, `calcularFaltante`, `estadoDesdeNombre` y el patrón State (`EstadoPedido`). 
+
 **Qué modificamos:**  
 - Se revisó cada caso de prueba generado para verificar que los datos de entrada y resultados esperados coincidieran con el comportamiento real del `main.go`.  
 - Se ajustaron las funciones extraídas para que reflejaran fielmente la lógica original sin dependencias de base de datos.  
 - Se corrigió la ruta del workflow (`test/unit/` en lugar de `tests/unit/`) para adaptarla a la estructura real del repositorio.  
 - Se agregó el archivo `go.sum` vacío necesario para la ejecución del pipeline de GitHub Actions.
 **Justificación:**  
-Se utilizó Claude para identificar las funciones de negocio puras dentro del `main.go`, diseñar los casos de prueba aplicando partición de equivalencia y análisis de valores límite, y generar el código correspondiente. Cada artefacto fue revisado y validado por el equipo antes de su incorporación al repositorio, verificando que los tests pasaran correctamente y que la documentación fuera precisa.
+Se utilizó Claude para identificar las funciones de negocio puras dentro del `main.go`,. Cada artefacto fue revisado y validado por el equipo antes de su incorporación al repositorio, verificando que los tests pasaran correctamente y que la documentación fuera precisa.
  
 ---
  
