@@ -1,4 +1,4 @@
-# === PREGUNTAS DISPARADORAS ===
+# === Verificación y Validación===
 
 ## 1. Verificación vs Validación
 
