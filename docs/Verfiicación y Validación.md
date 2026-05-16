@@ -1,3 +1,7 @@
+# === PREGUNTAS DISPARADORAS ===
+
+## 1. Verificación vs Validación
+
 La diferencia clave entre validar y verificar es que: verificar implica confirmar que el desarrollo del producto se está llevando a cabo correctamente; mientras que, validar implica que se está desarrollando el producto adecuado, siguiendo las especificaciones del cliente.
 
 ### Ejemplo de verificación
@@ -9,6 +13,8 @@ El proceso que llevamos a cabo al momento de testear nuestro producto, a fin de 
 Si bien no contamos con un cliente puntual, podemos verlo desde el punto de vista académico. Al saber que a nuestro profesor le gusta la incorporación de exportación de datos en `.csv` o `.xlsx`, buscaremos validar que en nuestro desarrollo se incluya esa especificación, a fin de garantizar la mayor satisfacción.
 
 ---
+
+## 2. Planificación de V&V
 
 Para el próximo sprint se proponen dos actividades concretas que surgen directamente de lo que el TP2 dejó pendiente.
 
@@ -30,9 +36,7 @@ Se propone una sesión de observación donde una persona ajena al desarrollo int
 
 Los resultados de esa sesión se comparan contra el baseline del TP2 y alimentan las mejoras del siguiente sprint, cerrando la cuarta fase del ciclo ISO 13407 que la auditoría de usabilidad había dejado pendiente.
 
----
-
-Para el próximo sprint se proponen dos actividades concretas que surgen directamente de lo que el TP2 dejó pendiente: B3 diseñó los mocks pero no los implementó, y A3 definió métricas pero solo las simuló. Cada actividad cierra una de esas brechas.
+### Resumen de actividades
 
 | Actividad 1 Verificación | Actividad 2 |
 |---|---|
@@ -51,6 +55,8 @@ Para el próximo sprint se proponen dos actividades concretas que surgen directa
 
 ---
 
+## 3. Inspecciones de software
+
 La inspección de código es una revisión manual del código sin ejecutarlo, mientras que las pruebas automáticas sí ejecutan el programa para verificar resultados.
 
 Por un lado, la inspección sirve para encontrar:
@@ -64,6 +70,8 @@ Por otro lado, las pruebas automáticas sirven para detectar errores en el funci
 En nuestro proyecto usamos inspección cuando revisamos el código antes de subirlo, y usamos pruebas automáticas en GitHub Actions para ejecutar los tests cada vez que hacemos cambios.
 
 ---
+
+## 4. Análisis estático automatizado
 
 Para el desarrollo de nuestro proyecto, consideramos apropiada como herramienta de análisis estático automatizado `golangci-lint`, un agregador de linters especializado en el lenguaje Go, que fue el elegido para la implementación del backend.
 
@@ -93,6 +101,8 @@ De esta manera, el análisis estático contribuye a mejorar la calidad y robuste
 
 ---
 
+## 5. Métodos formales de verificación
+
 Los métodos formales son imprescindibles en sistemas donde un error puede causar consecuencias muy graves, como accidentes o pérdidas de vidas.
 
 ### Ejemplos
@@ -113,6 +123,8 @@ Los métodos formales, en cambio, usan matemática y lógica para demostrar que 
 - y no siempre vale la pena: en aplicaciones comunes, como un sistema de ferretería, un error puede causar problemas operativos, pero se puede corregir después con una actualización. En cambio, en un sistema crítico, un error podría provocar una tragedia.
 
 ---
+
+## 6. Reuniones de validación en Scrum/XP
 
 El Product Owner (PO) en la sprint review es la persona que verifica si el sistema realmente sirve para resolver el problema del negocio.
 
