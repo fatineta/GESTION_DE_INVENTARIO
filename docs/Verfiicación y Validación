@@ -1,0 +1,123 @@
+# Preguntas Disparadoras – Proyecto Ferretería
+
+## 1. Verificación vs Validación
+
+La diferencia clave es el objeto de la evaluación:
+
+- **Verificación:** pregunta *“¿estamos construyendo el sistema correctamente?”*  
+  Se enfoca en el código, diseño y funcionamiento técnico.
+
+- **Validación:** pregunta *“¿estamos construyendo el sistema correcto?”*  
+  Se enfoca en si el sistema realmente resuelve el problema del usuario.
+
+### Ejemplo de verificación en el proyecto
+Los 21 casos de prueba unitaria con TDD verifican que `calcularNuevoStock`, `calcularUrgencia` y el patrón State funcionan correctamente según las reglas definidas.
+
+Por ejemplo, el caso `TC-03` comprueba que el sistema rechaza una salida cuando la cantidad supera el stock disponible.
+
+### Ejemplo de validación en el proyecto
+La auditoría de usabilidad basada en la norma ISO 9241-11 es un ejemplo de validación.
+
+Al pedirle a un usuario externo que registre una salida de productos en el sistema, se observó que:
+- el flujo tenía 6 pasos en vez de 5,
+- y que las opciones de entrada/salida podían confundirse visualmente.
+
+El código funcionaba correctamente, pero la solución no era completamente adecuada para el usuario.
+
+---
+
+## 2. Planificación de V&V para el próximo sprint
+
+### Actividad 1 – Verificación
+Implementar pruebas de integración con mocks (`MockStockRepository`) para verificar que:
+- el cálculo de stock,
+- las alertas,
+- y la persistencia
+
+funcionen correctamente en conjunto.
+
+### Actividad 2 – Validación
+Realizar una nueva prueba de usabilidad sobre el prototipo Figma corregido, incorporando:
+- separación visual entre entrada y salida,
+- buscador con autocompletado.
+
+El objetivo es comprobar si el usuario puede completar el flujo de manera más rápida y sin errores.
+
+---
+
+## 3. Inspecciones de código vs pruebas automáticas
+
+Una inspección de código es una revisión manual del código sin ejecutarlo.  
+Una prueba automática ejecuta el programa y verifica si el resultado obtenido es el esperado.
+
+### Diferencias principales
+
+**Inspección de código**
+- Detecta código confuso o mal estructurado.
+- Encuentra malas prácticas o problemas de diseño.
+- Puede descubrir vulnerabilidades o código muerto.
+
+**Pruebas automáticas**
+- Detectan errores de funcionamiento.
+- Permiten verificar rápidamente si el sistema sigue funcionando después de cambios.
+- Son ideales para regresiones.
+
+### Ejemplo en el proyecto
+Antes de subir los tests generados con ayuda de IA, el equipo revisó manualmente que reflejaran correctamente la lógica del `main.go`. Eso fue una inspección.
+
+Por otro lado, GitHub Actions ejecuta automáticamente los 21 tests en cada push para comprobar que todo siga funcionando correctamente.
+
+---
+
+## 4. Análisis estático automatizado
+
+Una herramienta conocida es **ESLint**.
+
+Sirve para analizar código JavaScript sin ejecutarlo y puede detectar:
+- variables no utilizadas,
+- errores de sintaxis,
+- código duplicado,
+- malas prácticas de programación.
+
+Por ejemplo, podría detectar una variable declarada en el frontend del sistema de la ferretería que nunca se utiliza.
+
+---
+
+## 5. Métodos formales de verificación
+
+Los métodos formales son imprescindibles en sistemas críticos donde un error puede tener consecuencias graves o irreversibles, por ejemplo:
+- aviones,
+- marcapasos,
+- centrales nucleares,
+- sistemas ferroviarios.
+
+Se utilizan para demostrar matemáticamente que el sistema funciona correctamente.
+
+### ¿Por qué no se usan siempre?
+
+Porque:
+- son muy costosos,
+- requieren especialistas en lógica y matemática,
+- llevan mucho tiempo,
+- y no escalan fácilmente en sistemas grandes.
+
+En aplicaciones de negocio, como nuestro sistema de ferretería, un error puede generar problemas operativos, pero normalmente puede corregirse luego con una actualización.
+
+---
+
+## 6. Reuniones de validación en Scrum/XP
+
+En una Sprint Review, el Product Owner (PO) verifica si el sistema realmente cumple las necesidades del negocio.
+
+En nuestro proyecto, el PO representaría al dueño de la ferretería y debería comprobar si:
+- las alertas de urgencia,
+- y el control de stock
+
+ayudan realmente a evitar faltantes de productos.
+
+### Relación con las pruebas automatizadas
+
+Las pruebas automatizadas no son revisadas directamente por el PO, pero le dan al equipo confianza de que el sistema funciona correctamente antes de presentarlo.
+
+Los 21 tests ejecutados en GitHub Actions garantizan estabilidad técnica.  
+Si los tests fallaran, el incremento no debería presentarse en la Sprint Review.
