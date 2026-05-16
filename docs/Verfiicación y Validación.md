@@ -143,3 +143,125 @@ El PO no necesita ver esos tests, pero gracias a ellos recibe un sistema más es
 Si los tests fallaran, el equipo no debería presentar el incremento en la sprint review.
 
 Por eso, las pruebas automatizadas son una base necesaria para que el PO pueda validar el sistema de manera correcta.
+
+# Segunda Parte
+
+# Sección 1: Verificación vs Validación
+
+## 1. Verificación
+
+Una verificación que ya realizamos en el proyecto es la ejecución de **pruebas unitarias automatizadas** sobre funciones críticas del sistema, como el cálculo de stock y la validación de productos, para comprobar que el código funciona correctamente según lo esperado.
+
+Las funciones verificadas incluyen:
+
+- `calcularNuevoStock`
+- `calcularUrgencia`
+- `validarProducto`
+- Patrón State de `EstadoPedido`
+
+---
+
+## 2. Validación
+
+Como validación, planeamos realizar una prueba con el **Product Owner**, donde se simulará el uso real del sistema para verificar que el flujo de registro de movimientos de stock y reposición resulte claro, rápido y útil para el trabajo diario en la ferretería.
+
+---
+
+# SECCIÓN 2: Planificación de V&V
+
+La siguiente tabla presenta las actividades de Verificación y Validación (V&V) planificadas para los próximos sprints del proyecto. En cada actividad se indica la técnica utilizada, el responsable asignado y la herramienta de apoyo que se empleará durante el proceso.
+
+| Sprint | Actividad de V&V | Técnica | Responsable | Herramienta |
+|--------|------------------|---------|-------------|-------------|
+| Actual | Verificar alertas de stock con mocks | Pruebas de integración | Agazzoni Fátima | Go testing |
+| Actual | Revisar errores en el código | Análisis estático | Zayas Ana Florencia | staticcheck |
+| Próximo | Probar la usabilidad del prototipo | Prueba de usabilidad | Leguizamon Vanina | Figma |
+| Próximo | Validar el flujo de reposición con el Product Owner | Validación con usuario | Bedoya Brenda | Checklist + Figma |
+
+---
+
+# Sección 3: Inspección y Análisis Estático
+
+## a) ¿Qué archivo o módulo inspeccionarían primero? ¿Por qué?
+
+El primer archivo a inspeccionar sería `main.go`, específicamente los handlers:
+
+- `handleMovimientoStock`
+- `handleCrearProducto`
+
+La razón es que concentran gran parte de la lógica crítica del sistema: validaciones de stock, actualizaciones de base de datos, disparo del patrón Observer y manejo de requests HTTP.
+
+Es el módulo de mayor riesgo, ya que un error podría:
+
+- Generar stock negativo
+- No disparar alertas de reposición
+- Registrar movimientos incorrectos en la base de datos
+
+Además, fue el módulo que requirió refactorización durante el TP2 para poder implementar pruebas unitarias, lo que evidencia su complejidad.
+
+---
+
+## b) Herramienta de análisis estático y primera regla a aplicar
+
+La herramienta elegida es **staticcheck**, uno de los analizadores estáticos más utilizados en el ecosistema Go.
+
+Su ventaja es que puede integrarse fácilmente al pipeline de **GitHub Actions** ya configurado en el proyecto.
+
+La primera regla a aplicar sería:
+
+- `SA4006`: variable declarada pero nunca utilizada correctamente.
+
+Actualmente algunos handlers crean variables de error y luego no verifican si ocurrió un fallo antes de continuar la ejecución.
+
+Por ejemplo:
+
+- Una consulta `db.Exec()` puede fallar
+- El sistema igualmente respondería con éxito al frontend
+- El movimiento no quedaría guardado en MySQL
+
+Detectar estos casos mejora significativamente la robustez y confiabilidad del sistema.
+
+También permitiría detectar:
+
+- Respuestas HTTP incorrectas
+- Queries mal formadas
+- Código inseguro o redundante
+
+---
+
+# SECCIÓN 4: Método Formal Conceptual
+
+## Invariante del sistema
+
+Para cualquier artículo del sistema de inventario:
+
+- `StockActual >= 0`
+- Ante un movimiento de tipo `SALIDA`, la cantidad solicitada no puede superar el stock disponible.
+
+---
+
+## Verificación del invariante
+
+Implementaríamos una prueba unitaria utilizando el framework nativo de Go (`testing`).
+
+El caso de prueba sería:
+
+- Producto con `StockActual = 5`
+- Intento de salida con `Cantidad = 10`
+
+La prueba debería verificar dos propiedades:
+
+1. Que la función devuelva un error explícito (`ErrStockInsuficiente`)
+2. Que el valor de `StockActual` permanezca en `5` y nunca pase a un número negativo
+
+---
+
+# SECCIÓN 5: Reunión de Validación (Simulación)
+
+En la próxima Sprint Review, le realizaríamos las siguientes preguntas al Product Owner para validar si el sistema resuelve correctamente el problema real del negocio.
+
+## Preguntas para el Product Owner
+
+1. **“Considerando el ritmo de trabajo habitual en el mostrador de la ferretería, ¿el flujo de registro de salida de material resulta lo suficientemente ágil o existe algún paso innecesario que retrase la atención al cliente?”**
+
+2. **“¿La diferencia visual entre las operaciones de Entrada y Salida de stock es suficientemente clara como para evitar errores de carga durante el uso diario del sistema?”**
